@@ -19,15 +19,15 @@ hbs.registerPartials(partialsPath);
 app.use(express.static(publicPath));
 
 app.get("", (req, res) => {
-    res.render("index", { title: "index", active: true });
+    res.render("index", { title: "Index", active: "index" });
 });
 
 app.get("/about", (req, res) => {
-    res.render("about", { title: "about", active: true });
+    res.render("about", { title: "About", active: "about" });
 });
 
 app.get("/addLocation", (req, res) => {
-    res.render("addLocation", { title: "addLocation", active: true });
+    res.render("addLocation", { title: "Add Location", active: "addLocation" });
 });
 
 app.get("*", (req, res) => {
