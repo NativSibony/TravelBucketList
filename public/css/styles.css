@@ -54,7 +54,6 @@ header {
   color: #888;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 0.825em;
   margin: 0px 30px;
 }
 
@@ -259,4 +258,7 @@ footer {
 }
 
 @media screen and (max-width: 462px) {
+  .links a {
+    font-size: 0.625em;
+  }
 }
