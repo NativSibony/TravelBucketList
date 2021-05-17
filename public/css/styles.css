@@ -104,7 +104,7 @@ main {
   text-align: center;
   align-items: center;
   row-gap: 10px;
-  background: linear-gradient(175deg, rgb(244, 247, 252), rgb(212, 232, 253));
+  background: radial-gradient(ellipse, rgb(255, 255, 255), rgb(222, 240, 255));
   border-radius: 20px;
 }
 
@@ -125,9 +125,9 @@ button {
 }
 
 .location button:hover {
-  background: rgb(105, 155, 221);
+  background: rgb(168, 204, 252);
   color: white;
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .location-name {
@@ -142,12 +142,13 @@ button {
 
 /* Footer */
 footer {
+  font-size: 0.753em;
   flex-shrink: 0;
-  color: #aaa;
+  color: #aaaaaaa6;
   padding: 15px;
 }
 
-/* Modal */
+/* Modal - https://www.w3schools.com/howto/howto_css_modals.asp */
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -165,13 +166,14 @@ footer {
 
 /* Modal Content */
 .modal-content {
+  display: inline-block;
   position: relative;
   background-color: #fefefe;
   margin: auto;
   padding: 0;
   border: 1px solid #888;
   border-radius: 25px;
-  width: 60%;
+  width: 50%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
@@ -181,6 +183,8 @@ footer {
 
 .modal-content img {
   width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 /* Add Animation */
@@ -210,9 +214,13 @@ footer {
 
 /* The Close Button */
 .close {
-  color: #888;
-  float: right;
-  font-size: 28px;
+  position: absolute;
+  top: 0%;
+  left: 100%;
+  transform: translateX(-100%);
+  padding: 0px 15px;
+  color: #fff;
+  font-size: 2em;
   font-weight: bold;
 }
 
@@ -224,11 +232,12 @@ footer {
 }
 
 .modal-header {
-  padding: 2px 16px;
+  /* padding: 2px 16px; */
   color: white;
 }
 
 .modal-body {
+  font-size: 0.8em;
   padding: 2px 16px;
 }
 
@@ -258,13 +267,54 @@ footer {
   background: rgb(120, 130, 145);
 }
 
+.form-row {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8em;
+  text-align: left;
+  padding-bottom: 20px;
+}
+
+.form-row textarea,
+input {
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.form-row textarea:focus,
+input:focus {
+  outline: none;
+  box-shadow: 0 0 3pt 1pt #bbb;
+}
+
+.inputfile::before {
+  font-family: "Poppins";
+  text-transform: uppercase;
+  content: "\1F4F7";
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.inputfile {
+  background-color: #ddd;
+  border: none;
+}
+
+.inputfile::-webkit-file-upload-button {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .modal-content {
+    width: 60%;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .container {
     width: 80%;
-  }
-
-  .modal-content {
-    width: 70%;
   }
 
   .logo h1 {
@@ -274,5 +324,13 @@ footer {
   .links a {
     font-size: 0.8em;
     margin: 0 20px;
+  }
+
+  .modal-content {
+    width: 70%;
+  }
+
+  .modal-body {
+    font-size: 0.6em;
   }
 }

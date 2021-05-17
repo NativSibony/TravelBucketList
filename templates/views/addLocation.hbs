@@ -13,12 +13,24 @@
 <body>
     {{>header}}
     <main>
-        <form action="">
-            <input type="text" placeholder="Location">
-            <button>Search</button>
+        <form class="addLocation" action="">
+            <div class="form-row">
+                <input type="text" placeholder="Location Name" name="Location">
+            </div>
+            <div class="form-row">
+                <input type="file" id="fileName" class="inputfile" accept="image/*" onchange="validateFileType()" />
+            </div>
+            <div class="form-row">
+                <textarea name="Description" id="" cols="30" rows="10"
+                    placeholder="Why Its Worth Going There?"></textarea>
+            </div>
+            <div class="form-row">
+                <input type="submit" value="Submit">
+            </div>
         </form>
     </main>
     {{>footer}}
+    <script src="/js/AddLocation.js"></script>
 </body>
 
 </html>
