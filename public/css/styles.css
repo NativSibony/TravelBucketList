@@ -306,6 +306,11 @@ input:focus {
   display: none;
 }
 
+#imgID {
+  border: none;
+  border-radius: 10px;
+}
+
 @media screen and (max-width: 1024px) {
   .modal-content {
     width: 60%;

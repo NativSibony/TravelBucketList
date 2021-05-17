@@ -13,16 +13,18 @@
 <body>
     {{>header}}
     <main>
-        <form class="addLocation" action="">
+        <form class="addLocation" method="post" action="/location">
             <div class="form-row">
-                <input type="text" placeholder="Location Name" name="Location">
+                <input type="text" placeholder="Location Name" name="location" required>
+            </div>
+            <div class="form-row" style="flex-direction: row;">
+                <input type="file" id="fileName" class="inputfile" accept="image/*" onchange="validateFileType()"
+                    required />
+                <img id="imgID" src="Error.src" onerror="this.style.display='none'" width="45" height="45">
             </div>
             <div class="form-row">
-                <input type="file" id="fileName" class="inputfile" accept="image/*" onchange="validateFileType()" />
-            </div>
-            <div class="form-row">
-                <textarea name="Description" id="" cols="30" rows="10"
-                    placeholder="Why Its Worth Going There?"></textarea>
+                <textarea name="description" id="" cols="30" rows="10" placeholder="Why Its Worth Going There?"
+                    required></textarea>
             </div>
             <div class="form-row">
                 <input type="submit" value="Submit">
@@ -30,7 +32,7 @@
         </form>
     </main>
     {{>footer}}
-    <script src="/js/AddLocation.js"></script>
+    <script src="/js/Form.js"></script>
 </body>
 
 </html>
