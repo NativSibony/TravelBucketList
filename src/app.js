@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
+const Location = require("./db/mongoose");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,7 +44,24 @@ app.get("*", (req, res) => {
 
 app.post("/location", (req, res) => {
   const { location, description } = req.body;
-  res.render("index", { title: "Index", active: "index" });
+  // console.log(imageSRC, imageID);
+  // const data = new Location({
+  //   location,
+  //   description,
+  //   imageID,
+  //   imageSRC,
+  // });
+  // data
+  //   .save()
+  //   .then(() => {
+  //     console.log(data);
+  //   })
+  //   .catch((err) => {
+  //     console.log("Error", err);
+  //   });
+  setTimeout(() => {
+    res.redirect("/");
+  }, 2000);
 });
 
 hbs.registerHelper("isEqual", function (s1, s2) {

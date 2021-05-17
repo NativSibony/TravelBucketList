@@ -1,3 +1,5 @@
+const store = require("store");
+
 const addLocation = document.querySelector("form");
 const file = document.getElementById("fileName");
 const reader = new FileReader();
@@ -5,8 +7,7 @@ const reader = new FileReader();
 addLocation.onsubmit = (e) => {
   let imageID = getName(file.value);
   localStorage.clear();
-  //   localStorage.setItem("image", reader.result);
-  //   localStorage.setItem("imageID", imageID);
+  store.set("imageID", imageID);
 };
 
 function previewFile() {
