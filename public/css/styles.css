@@ -88,7 +88,7 @@ main {
 }
 
 .container > * {
-  flex: 1 1 16em;
+  flex: 1 1 12.5em;
 }
 
 .location img {
@@ -131,7 +131,7 @@ button {
 }
 
 .location-name {
-  font-size: 1.3em;
+  font-size: 1em;
   color: #333;
   font-weight: 600;
 }
@@ -178,6 +178,7 @@ footer {
   animation-name: animatetop;
   animation-duration: 0.4s;
 }
+
 .modal-content img {
   width: 100%;
 }
@@ -257,7 +258,11 @@ footer {
   background: rgb(120, 130, 145);
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
+  main {
+    width: 150%;
+  }
+
   .logo h1 {
     font-size: 3rem;
   }

@@ -25,5 +25,7 @@ span.onclick = function () {
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        const img = modalHeader.querySelector("img");
+        modalHeader.removeChild(img);
     }
 }
