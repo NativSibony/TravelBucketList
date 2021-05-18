@@ -1,14 +1,5 @@
-const store = require("store");
-
-const addLocation = document.querySelector("form");
 const file = document.getElementById("fileName");
 const reader = new FileReader();
-
-addLocation.onsubmit = (e) => {
-  let imageID = getName(file.value);
-  localStorage.clear();
-  store.set("imageID", imageID);
-};
 
 function previewFile() {
   var preview = document.getElementById("imgID");
@@ -36,10 +27,4 @@ function validateFileType() {
     alert("Only jpg/jpeg and png files are allowed!");
     window.location.reload();
   }
-}
-
-function getName(fileName) {
-  var split = fileName.split("\\");
-  var final = split[split.length - 1].split(".");
-  return final[0];
 }

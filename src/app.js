@@ -3,12 +3,17 @@ const express = require("express");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
 const Location = require("./db/mongoose");
+const multer = require("multer");
+const upload = multer({ dest: "public/img" });
+const fs = require("fs");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Define paths for Express config
 const publicPath = path.join(__dirname, "../public");
+// const upload = multer({ dest: publicPath + "/img" });
+
 const viewsPath = path.join(__dirname, "../templates/views");
 const partialsPath = path.join(__dirname, "../templates/partials");
 
@@ -42,23 +47,20 @@ app.get("*", (req, res) => {
   });
 });
 
-app.post("/location", (req, res) => {
+app.post("/location", upload.single("fileName"), (req, res, next) => {
   const { location, description } = req.body;
-  // console.log(imageSRC, imageID);
-  // const data = new Location({
-  //   location,
-  //   description,
-  //   imageID,
-  //   imageSRC,
-  // });
-  // data
-  //   .save()
-  //   .then(() => {
-  //     console.log(data);
-  //   })
-  //   .catch((err) => {
-  //     console.log("Error", err);
-  //   });
+  const { path } = req.file;
+  const src = path.replace("public", "");
+  const obj = {
+    location,
+    description,
+    src,
+  };
+  const data = new Location(obj);
+  fs.writeFileSync("public/static/fromMongo.json", JSON.stringify(obj));
+  data.save().catch((err) => {
+    console.log("Error", err);
+  });
   setTimeout(() => {
     res.redirect("/");
   }, 2000);

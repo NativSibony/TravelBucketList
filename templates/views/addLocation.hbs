@@ -13,13 +13,13 @@
 <body>
     {{>header}}
     <main>
-        <form class="addLocation" method="post" action="/location">
+        <form action="/location" method="post" enctype="multipart/form-data" class="addLocation">
             <div class="form-row">
                 <input type="text" placeholder="Location Name" name="location" required>
             </div>
             <div class="form-row" style="flex-direction: row;">
-                <input type="file" id="fileName" class="inputfile" accept="image/*" onchange="validateFileType()"
-                    required />
+                <input type="file" name="fileName" id="fileName" class="inputfile" accept="image/*"
+                    onchange="validateFileType()" required />
                 <img id="imgID" src="Error.src" onerror="this.style.display='none'" width="45" height="45">
             </div>
             <div class="form-row">

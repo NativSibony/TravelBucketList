@@ -1,33 +1,60 @@
-fetch("/static/locations.json")
-  .then(function (response) {
-    return response.json();
-  })
-  .then((locations) => {
-    runModalApp(locations);
+const container = document.getElementById("container");
+const modalBody = document.querySelector(".modal-body");
+
+Promise.all([
+  fetch("/static/locations.json")
+    .then((data) => data.json())
+    .catch((err) => false),
+  fetch("/static/fromMongo.json")
+    .then((data) => data.json())
+    .catch((err) => false),
+]).then((data) => {
+  if (!data[1]) {
+    data[1] = undefined;
+  }
+  data[1] = [data[1]];
+  runModalApp(data);
+  // console.log(data);
+});
+function buildLocationCards(locations) {
+  let element;
+  Object.values(locations).forEach((v) => {
+    element = `<div class="location">
+                    <img src="${v.src}" alt="">
+                    <div class="location-name">
+                        <p>${v.location}</p>
+                    </div>
+                    <button class="open-modal" id="${v.location}">view</button>
+                </div>`;
+    container.insertAdjacentHTML("beforeend", element);
   });
+}
 
-function buildLocationCards(locations) {}
+function runModalApp(data) {
+  // Static Data
+  buildLocationCards(data[0]);
+  // MongoDB Data
+  buildLocationCards(data[1]);
 
-function runModalApp() {
   // Get the modal
-  var modal = document.querySelector(".modal");
-  var modalHeader = document.querySelector(".modal-header");
+  const modal = document.querySelector(".modal");
+  const modalHeader = document.querySelector(".modal-header");
+  // Get the Close Button element that closes the modal
+  const closeBtn = document.querySelector(".close");
 
   // Get all buttons that opens a modal
-  var btns = document.querySelectorAll(".open-modal");
-
-  // Get the Close Button element that closes the modal
-  var closeBtn = document.querySelector(".close");
-
+  const btns = document.querySelectorAll(".open-modal");
+  var description;
+  var src;
   // When the user clicks the button, open the modal
   btns.forEach((btn) => {
     const btnID = btn.id;
     btn.onclick = function () {
       modal.style.display = "block";
-      modalHeader.insertAdjacentHTML(
-        "afterbegin",
-        `<img src="/img/${btnID}.png" alt="">`
-      );
+      getSRC(data[0], btnID);
+      modalHeader.insertAdjacentHTML("afterbegin", `<img src="${src}" alt="">`);
+      getDescription(data[0], btnID);
+      modalBody.insertAdjacentHTML("afterbegin", `<p>${description}</p>`);
     };
   });
 
@@ -35,7 +62,9 @@ function runModalApp() {
   closeBtn.onclick = function () {
     modal.style.display = "none";
     const img = modalHeader.querySelector("img");
+    const p = modalBody.querySelector("p");
     modalHeader.removeChild(img);
+    modalBody.removeChild(p);
   };
 
   // When the user clicks anywhere outside of the modal, close it
@@ -43,7 +72,46 @@ function runModalApp() {
     if (event.target == modal) {
       modal.style.display = "none";
       const img = modalHeader.querySelector("img");
+      const p = modalBody.querySelector("p");
       modalHeader.removeChild(img);
+      modalBody.removeChild(p);
     }
   };
+
+  function getDescription(locations, btnID) {
+    Object.entries(locations).forEach((k, v) => {
+      console.log(k, v);
+      if (k[1] !== undefined) {
+        if (k[1].location === btnID) {
+          description = k[1].description;
+          return;
+        }
+      }
+      if (data[1][v] !== undefined) {
+        if (data[1][v].location === btnID) {
+          description = data[1][v].description;
+          return;
+        }
+      }
+    });
+    return "";
+  }
+
+  function getSRC(locations, btnID) {
+    Object.entries(locations).forEach((k, v) => {
+      if (k[1] !== undefined) {
+        if (k[1].location === btnID) {
+          src = k[1].src;
+          return;
+        }
+      }
+      if (data[1][v] !== undefined) {
+        if (data[1][v].location === btnID) {
+          src = data[1][v].src;
+          return;
+        }
+      }
+    });
+    return "";
+  }
 }

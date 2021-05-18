@@ -14,26 +14,10 @@ const Location = mongoose.model("Location", {
     type: String,
     required: true,
   },
-  imageID: {
-    type: String,
-    required: true,
-  },
-  imageSRC: {
+  src: {
     type: String,
     required: true,
   },
 });
 
 module.exports = Location;
-// const me = new User({
-//   name: "Mike",
-//   age: -2,
-// });
-
-// me.save()
-//   .then(() => {
-//     console.log(me);
-//   })
-//   .catch((err) => {
-//     console.log("Error", err);
-//   });
