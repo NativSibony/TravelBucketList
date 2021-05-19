@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const Location = require("./db/mongoose");
 const multer = require("multer");
 const upload = multer({ dest: "public/img" });
-const fs = require("fs");
+const locations = require("./utils/locations");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -41,6 +41,14 @@ app.get("/addLocation", (req, res) => {
   res.render("addLocation", { title: "Add Location", active: "addLocation" });
 });
 
+app.get("/remove", (req, res) => {
+  const loc = req.query.loc;
+  locations.removeLocation(loc);
+  setTimeout(() => {
+    res.redirect("/");
+  }, 1000);
+});
+
 app.get("*", (req, res) => {
   res.render("404", {
     title: "404 Page Not Found!",
@@ -51,19 +59,21 @@ app.post("/location", upload.single("fileName"), (req, res, next) => {
   const { location, description } = req.body;
   const { path } = req.file;
   const src = path.replace("public", "");
+  const rem = true;
   const obj = {
     location,
     description,
     src,
+    rem,
   };
+  locations.addLocation(location, obj);
   const data = new Location(obj);
-  fs.writeFileSync("public/static/fromMongo.json", JSON.stringify(obj));
   data.save().catch((err) => {
     console.log("Error", err);
   });
   setTimeout(() => {
     res.redirect("/");
-  }, 2000);
+  }, 1000);
 });
 
 hbs.registerHelper("isEqual", function (s1, s2) {

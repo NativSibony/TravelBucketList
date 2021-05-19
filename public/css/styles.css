@@ -113,7 +113,12 @@ button {
   margin: 0px 10px 10px 10px;
 }
 
-.location button {
+.modal-buttons {
+  display: flex;
+}
+
+.open-modal {
+  display: inline;
   cursor: pointer;
   padding: 6px 12px;
   border: none;
@@ -124,7 +129,18 @@ button {
   font-weight: 600;
 }
 
-.location button:hover {
+.remove-card {
+  cursor: pointer;
+  padding: 6px 12px;
+  border: none;
+  background: rgb(241, 85, 85);
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.open-modal:hover {
   background: rgb(168, 204, 252);
   color: white;
   transition: 0.5s;

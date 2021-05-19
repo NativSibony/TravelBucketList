@@ -12,20 +12,24 @@ Promise.all([
   if (!data[1]) {
     data[1] = undefined;
   }
-  data[1] = [data[1]];
   runModalApp(data);
-  // console.log(data);
 });
 function buildLocationCards(locations) {
   let element;
   Object.values(locations).forEach((v) => {
     element = `<div class="location">
-                    <img src="${v.src}" alt="">
-                    <div class="location-name">
-                        <p>${v.location}</p>
-                    </div>
+                <img src="${v.src}" alt="">
+                  <div class="location-name">
+                      <p>${v.location}</p>
+                  </div>
+                  <div class="modal-buttons">
                     <button class="open-modal" id="${v.location}">view</button>
-                </div>`;
+                    <button class="remove-card" id="${v.location}" 
+                      style="display:${
+                        v.rem ? "block" : "none"
+                      }">remove</button>
+                  </div>
+              </div>`;
     container.insertAdjacentHTML("beforeend", element);
   });
 }
@@ -34,7 +38,7 @@ function runModalApp(data) {
   // Static Data
   buildLocationCards(data[0]);
   // MongoDB Data
-  buildLocationCards(data[1]);
+  data[1] !== undefined ? buildLocationCards(data[1]) : "";
 
   // Get the modal
   const modal = document.querySelector(".modal");
@@ -80,17 +84,18 @@ function runModalApp(data) {
 
   function getDescription(locations, btnID) {
     Object.entries(locations).forEach((k, v) => {
-      console.log(k, v);
       if (k[1] !== undefined) {
         if (k[1].location === btnID) {
           description = k[1].description;
           return;
         }
       }
-      if (data[1][v] !== undefined) {
-        if (data[1][v].location === btnID) {
-          description = data[1][v].description;
-          return;
+      if (data[1] !== undefined) {
+        if (data[1][v] !== undefined) {
+          if (data[1][v].location === btnID) {
+            description = data[1][v].description;
+            return;
+          }
         }
       }
     });
@@ -105,13 +110,28 @@ function runModalApp(data) {
           return;
         }
       }
-      if (data[1][v] !== undefined) {
-        if (data[1][v].location === btnID) {
-          src = data[1][v].src;
-          return;
+      if (data[1] !== undefined) {
+        if (data[1][v] !== undefined) {
+          if (data[1][v].location === btnID) {
+            src = data[1][v].src;
+            return;
+          }
         }
       }
     });
     return "";
   }
+
+  // Get all remove buttons
+  const rem = document.querySelectorAll(".remove-card");
+
+  // When the user clicks the button, open the modal
+
+  rem.forEach((el) => {
+    const location = el.id;
+    el.onclick = () => {
+      fetch(`http://localhost:3000/remove?loc=${location}`);
+      window.location.reload();
+    };
+  });
 }
