@@ -5,9 +5,10 @@
 ## Installation
 
 - Clone this project to your local desired folder.
-- run `npm i`
-- run `npm run dev`
-- and open your browser on address `http://localhost:3000`
+- run the following commands:
+- `npm i`
+- `npm run dev`
+- Open your browser at address `http://localhost:3000`
 
 ## Support
 
