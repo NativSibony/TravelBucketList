@@ -48,7 +48,6 @@ app.get("/remove", (req, res) => {
   locations.removeLocation(loc);
   unlink("public/" + src, (err) => {
     if (err) throw err;
-    console.log("public/" + src + " was deleted");
   });
   setTimeout(() => {
     res.redirect("/");
@@ -75,7 +74,7 @@ app.post("/location", upload.single("fileName"), (req, res, next) => {
   locations.addLocation(location, obj);
   const data = new Location(obj);
   data.save().catch((err) => {
-    console.log("Error", err);
+    if (err) throw err;
   });
   setTimeout(() => {
     res.redirect("/");
