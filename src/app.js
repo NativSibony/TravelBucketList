@@ -6,6 +6,7 @@ const Location = require("./db/mongoose");
 const multer = require("multer");
 const upload = multer({ dest: "public/img" });
 const locations = require("./utils/locations");
+const { unlink } = require("fs");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,7 +44,12 @@ app.get("/addLocation", (req, res) => {
 
 app.get("/remove", (req, res) => {
   const loc = req.query.loc;
+  const src = req.query.src;
   locations.removeLocation(loc);
+  unlink("public/" + src, (err) => {
+    if (err) throw err;
+    console.log("public/" + src + " was deleted");
+  });
   setTimeout(() => {
     res.redirect("/");
   }, 1000);

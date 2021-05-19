@@ -130,7 +130,9 @@ function runModalApp(data) {
   rem.forEach((el) => {
     const location = el.id;
     el.onclick = () => {
-      fetch(`http://localhost:3000/remove?loc=${location}`);
+      getSRC(data[1], location);
+      console.log(src);
+      fetch(`/remove?loc=${location}&src=${src}`);
       window.location.reload();
     };
   });
