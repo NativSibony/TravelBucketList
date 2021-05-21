@@ -27,8 +27,8 @@ hbs.registerPartials(partialsPath);
 app.use(express.static(publicPath));
 
 // Setup body-parser middleware
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get("", (req, res) => {
   res.render("index", { title: "Index", active: "index" });
