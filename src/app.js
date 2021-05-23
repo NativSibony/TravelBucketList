@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
-const Location = require("./db/mongoose");
+// const Location = require("./db/mongoose");
 const multer = require("multer");
 const upload = multer({ dest: "public/img" });
 const locations = require("./utils/locations");
@@ -72,10 +72,10 @@ app.post("/location", upload.single("fileName"), (req, res, next) => {
     rem,
   };
   locations.addLocation(location, obj);
-  const data = new Location(obj);
-  data.save().catch((err) => {
-    if (err) throw err;
-  });
+  // const data = new Location(obj);
+  // data.save().catch((err) => {
+  //   if (err) throw err;
+  // });
   setTimeout(() => {
     res.redirect("/");
   }, 1000);
